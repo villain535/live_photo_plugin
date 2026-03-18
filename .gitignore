@@ -1,0 +1,39 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+.pub/
+build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# macOS
+.DS_Store
+
+.metadata
+pubspec.lock
+
+# Xcode / iOS
+ios/.symlinks/
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.gitignore
+**/xcuserdata/
+**/*.xcuserstate
+
+# CocoaPods lock files in example
+example/ios/Pods/
+example/ios/.symlinks/
+example/ios/Flutter/
+example/ios/Runner.xcworkspace/xcuserdata/
+example/ios/Podfile.lock
+
+# Example app - do not push
+example/
+
+# Generated / temporary
+*.log
+tmp/
+temp/

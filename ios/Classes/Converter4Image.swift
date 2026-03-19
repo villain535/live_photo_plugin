@@ -7,7 +7,7 @@ import Photos
 /// Utility class to handle image conversion for Live Photos
 /// Handles adding the necessary metadata to images to work as part of a Live Photo pair
 @objcMembers
-class Converter4Image: NSObject {
+public class Converter4Image: NSObject {
     /// Key for the asset identifier in the Apple maker notes
     private let kFigAppleMakerNote_AssetIdentifier = "17"
     /// The source image to be processed
@@ -15,13 +15,14 @@ class Converter4Image: NSObject {
 
     /// Initialize with a UIImage
     /// - Parameter image: The source image to be processed
-    @objc init(image: UIImage) {
+    @objc public init(image: UIImage) {
         self.image = image
+        super.init()
     }
 
     /// Read the asset identifier from an image's metadata
     /// - Returns: The asset identifier string if found, nil otherwise
-    @objc func read() -> String? {
+    @objc public func read() -> String? {
         guard let makerNote = metadata(index: 0)?.object(forKey: kCGImagePropertyMakerAppleDictionary) as? NSDictionary else {
             return nil
         }
@@ -32,7 +33,8 @@ class Converter4Image: NSObject {
     /// - Parameters:
     ///   - dest: The destination file path where the image will be saved
     ///   - assetIdentifier: The asset identifier to associate with this image
-    @objc func write(dest: String, assetIdentifier: String) {
+    @objc(writeWithDest:assetIdentifier:)
+    public func write(dest: String, assetIdentifier: String) {
         // Use UTType.heic for modern HEIC output
         guard let destURL = URL(fileURLWithPath: dest) as CFURL?,
               let destination = CGImageDestinationCreateWithURL(destURL, UTType.heic.identifier as CFString, 1, nil) else { return }

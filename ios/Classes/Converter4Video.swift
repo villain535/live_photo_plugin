@@ -4,7 +4,7 @@ import UIKit
 
 /// Utility class for video processing operations required for Live Photos
 @objcMembers
-class Converter4Video : NSObject {
+public class Converter4Video: NSObject {
     /// Identifier key for content in QuickTime metadata
     private let kKeyContentIdentifier = "com.apple.quicktime.content.identifier"
     /// Key for still image time in QuickTime metadata
@@ -22,13 +22,14 @@ class Converter4Video : NSObject {
 
     /// Initialize with a file path
     /// - Parameter path: Path to the video file
-    @objc init(path: String) {
+    @objc public init(path: String) {
         self.path = path
+        super.init()
     }
 
     /// Read the asset identifier from the video's metadata
     /// - Returns: Asset identifier string if found, nil otherwise
-    @objc func readAssetIdentifier() -> String? {
+    @objc public func readAssetIdentifier() -> String? {
         for item in metadata() {
             if item.key as? String == kKeyContentIdentifier &&
                 item.keySpace?.rawValue == kKeySpaceQuickTimeMetadata {
@@ -86,7 +87,8 @@ class Converter4Video : NSObject {
     ///   - assetIdentifier: Asset identifier to associate with this video
     ///   - metaURL: URL to a metadata source file
     ///   - completion: Completion handler with success status and optional error
-    @objc func write(dest: String, assetIdentifier: String, metaURL: URL, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(writeWithDest:assetIdentifier:metaURL:completion:)
+    public func write(dest: String, assetIdentifier: String, metaURL: URL, completion: @escaping (Bool, Error?) -> Void) {
         do {
             let metadataAsset = AVURLAsset(url: metaURL)
             
@@ -216,7 +218,8 @@ class Converter4Video : NSObject {
     ///   - inputPath: Path to the input video
     ///   - outputPath: Path for the processed output video
     ///   - completion: Completion handler with success status and optional error
-    @objc public func cleanTransformVideo(at inputPath: String, outputPath: String, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(cleanTransformVideoAt:outputPath:completion:)
+    public func cleanTransformVideo(at inputPath: String, outputPath: String, completion: @escaping (Bool, Error?) -> Void) {
         let inputURL = URL(fileURLWithPath: inputPath)
         let outputURL = URL(fileURLWithPath: outputPath)
         
@@ -265,7 +268,8 @@ class Converter4Video : NSObject {
     ///   - duration: Target duration for the output video
     ///   - outputPath: Path for the processed output video
     ///   - completion: Completion handler with success status and optional error
-    @objc public func accelerateVideo(at inputPath: String, to duration: CMTime, outputPath: String, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(accelerateVideoAt:to:outputPath:completion:)
+    public func accelerateVideo(at inputPath: String, to duration: CMTime, outputPath: String, completion: @escaping (Bool, Error?) -> Void) {
         let videoURL = URL(fileURLWithPath: inputPath)
         let asset = AVAsset(url: videoURL)
 
@@ -320,7 +324,8 @@ class Converter4Video : NSObject {
     ///   - outputPath: Path for the processed output video
     ///   - outputSize: Target dimensions for the output video
     ///   - completion: Completion handler with success status and optional error
-    @objc public func resizeVideo(at inputPath: String, outputPath: String, outputSize: CGSize, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(resizeVideoAt:outputPath:outputSize:completion:)
+    public func resizeVideo(at inputPath: String, outputPath: String, outputSize: CGSize, completion: @escaping (Bool, Error?) -> Void) {
         let inputURL = URL(fileURLWithPath: inputPath)
         let outputURL = URL(fileURLWithPath: outputPath)
         
@@ -401,7 +406,8 @@ class Converter4Video : NSObject {
     ///   - outputPath: Path for the processed output video
     ///   - degree: Rotation angle in degrees (90, -90, 180)
     ///   - completion: Completion handler with success status and optional error
-    @objc public func rotateVideo(at inputPath: String, outputPath: String, degree: Int, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(rotateVideoAt:outputPath:degree:completion:)
+    public func rotateVideo(at inputPath: String, outputPath: String, degree: Int, completion: @escaping (Bool, Error?) -> Void) {
         let inputURL = URL(fileURLWithPath: inputPath)
         let outputURL = URL(fileURLWithPath: outputPath)
         
@@ -492,7 +498,8 @@ class Converter4Video : NSObject {
     ///   - outputPath: Path for the processed output video
     ///   - targetDuration: Target duration in seconds
     ///   - completion: Completion handler with success status and optional error
-    @objc public func durationVideo(at inputPath: String, outputPath: String, targetDuration: Double, completion: @escaping (Bool, Error?) -> Void) {
+    @objc(durationVideoAt:outputPath:targetDuration:completion:)
+    public func durationVideo(at inputPath: String, outputPath: String, targetDuration: Double, completion: @escaping (Bool, Error?) -> Void) {
         let asset = AVURLAsset(url: URL(fileURLWithPath: inputPath))
         let duration = asset.duration
         let timeScale = Int32(duration.timescale)
@@ -601,7 +608,8 @@ class Converter4Video : NSObject {
         }
     }
 
-    @objc func createVideo(from image: UIImage, duration: CMTime, outputURL: URL, completion: @escaping (Bool) -> Void) {
+    @objc(createVideoFrom:duration:outputURL:completion:)
+    public func createVideo(from image: UIImage, duration: CMTime, outputURL: URL, completion: @escaping (Bool) -> Void) {
         let writer = try? AVAssetWriter(outputURL: outputURL, fileType: .mov)
 
         let writerInput = AVAssetWriterInput(mediaType: .video, outputSettings: [

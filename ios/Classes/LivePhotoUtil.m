@@ -1,3 +1,10 @@
+#if __has_include(<live_photo_plugin/live_photo_plugin-Swift.h>)
+#import <live_photo_plugin/live_photo_plugin-Swift.h>
+#elif __has_include("live_photo_plugin-Swift.h")
+#import "live_photo_plugin-Swift.h"
+#else
+#error "live_photo_plugin-Swift.h not found"
+#endif
 
 #import "LivePhotoUtil.h"
 #import <Photos/Photos.h>

@@ -6,7 +6,8 @@ import Photos
 
 /// Utility class to handle image conversion for Live Photos
 /// Handles adding the necessary metadata to images to work as part of a Live Photo pair
-@objc class Converter4Image: NSObject {
+@objcMembers
+class Converter4Image: NSObject {
     /// Key for the asset identifier in the Apple maker notes
     private let kFigAppleMakerNote_AssetIdentifier = "17"
     /// The source image to be processed

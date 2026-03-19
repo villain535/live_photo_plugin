@@ -3,7 +3,8 @@ import AVFoundation
 import UIKit
 
 /// Utility class for video processing operations required for Live Photos
-@objc class Converter4Video : NSObject {
+@objcMembers
+class Converter4Video : NSObject {
     /// Identifier key for content in QuickTime metadata
     private let kKeyContentIdentifier = "com.apple.quicktime.content.identifier"
     /// Key for still image time in QuickTime metadata

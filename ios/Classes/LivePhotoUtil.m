@@ -1,4 +1,4 @@
-#import "live_photo_plugin-Swift.h"
+
 #import "LivePhotoUtil.h"
 #import <Photos/Photos.h>
 #import <UIKit/UIKit.h>
@@ -9,13 +9,17 @@
 @implementation LivePhotoUtil
 
 + (void)convertVideo:(NSString *)path complete:(void(^)(BOOL, NSString *))complete {
-    NSBundle *pluginBundle = [NSBundle bundleForClass:NSClassFromString(@"LivePhotoPlugin")];
-    NSURL *metaURL = [pluginBundle URLForResource:@"metadata" withExtension:@"mov"];
+      NSBundle *pluginBundle = [NSBundle bundleForClass:[LivePhotoUtil class]];
+      NSURL *metaURL = [pluginBundle URLForResource:@"metadata" withExtension:@"mov"];
 
-    if (!metaURL) {
-        complete(NO, @"metadata.mov was not found in plugin bundle");
-        return;
-    }
+      if (!metaURL) {
+          metaURL = [NSBundle.mainBundle URLForResource:@"metadata" withExtension:@"mov"];
+      }
+
+      if (!metaURL) {
+          complete(NO, @"metadata.mov was not found in plugin bundle");
+          return;
+      }
 
     CGSize livePhotoSize = CGSizeMake(1080, 1920);
     CMTime livePhotoDuration = CMTimeMake(550, 600);
